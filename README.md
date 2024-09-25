@@ -1,7 +1,7 @@
 # giesinpa.github.io
 
 
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -28,18 +28,14 @@
     <script>
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-
         let width, height;
         let time = 0;
-
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
         }
-
         window.addEventListener('resize', resize);
         resize();
-
         function drawShape(t) {
             ctx.beginPath();
             for (let i = 0; i < Math.PI * 2; i += 0.01) {
@@ -51,7 +47,6 @@
             }
             ctx.closePath();
         }
-
         function hslToRgb(h, s, l) {
             let r, g, b;
             if (s === 0) {
@@ -73,21 +68,17 @@
             }
             return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
         }
-
         function animate() {
             ctx.clearRect(0, 0, width, height);
             ctx.save();
             ctx.translate(width / 2, height / 2);
-
             // Dynamic colorful border glow
             const hue1 = (Math.sin(time * 0.1) + 1) / 2;
             const hue2 = (Math.cos(time * 0.15) + 1) / 2;
             const hue3 = (Math.sin(time * 0.2 + Math.PI/2) + 1) / 2;
-
             const [r1, g1, b1] = hslToRgb(hue1, 1, 0.5);
             const [r2, g2, b2] = hslToRgb(hue2, 1, 0.5);
             const [r3, g3, b3] = hslToRgb(hue3, 1, 0.5);
-
             // Outer glow
             ctx.shadowColor = `rgb(${r1}, ${g1}, ${b1})`;
             ctx.shadowBlur = 20;
@@ -95,25 +86,21 @@
             ctx.lineWidth = 15;
             ctx.strokeStyle = `rgba(${r2}, ${g2}, ${b2}, 0.5)`;
             ctx.stroke();
-
             // Inner glow
             ctx.shadowColor = `rgb(${r3}, ${g3}, ${b3})`;
             ctx.shadowBlur = 10;
             ctx.lineWidth = 8;
             ctx.strokeStyle = `rgba(${r1}, ${g1}, ${b1}, 0.7)`;
             ctx.stroke();
-
             // Main shape
             ctx.shadowBlur = 0;
             ctx.fillStyle = '#fff';
             drawShape(time);
             ctx.fill();
-
             ctx.restore();
             time += 0.03;
             requestAnimationFrame(animate);
         }
-
         animate();
     </script>
 </body>
